@@ -1,0 +1,219 @@
+/* public/css/global.css */
+
+/* --- 1. COLOR VARIABLES (Theming) --- */
+
+:root {
+    /* Light Mode Defaults */
+    --color-primary: #007bff;          /* Blue for buttons, links */
+    --color-primary-hover: #0056b3;
+    --color-background: #f4f6f9;       /* Light gray background */
+    --color-surface: #ffffff;          /* White cards, forms */
+    --color-text: #333333;             /* Dark text */
+    --color-text-secondary: #6c757d;   /* Gray secondary text */
+    --color-border: #dee2e6;
+    --color-success: #28a745;
+    --color-error: #dc3545;
+    --color-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Overrides */
+.dark-mode {
+    --color-primary: #3c9dff;
+    --color-primary-hover: #007bff;
+    --color-background: #121212;
+    --color-surface: #1e1e1e;
+    --color-text: #e0e0e0;
+    --color-text-secondary: #aaaaaa;
+    --color-border: #333333;
+    --color-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* --- 2. GLOBAL RESET & BASE STYLES --- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- 3. AUTH PAGE STYLES (Animations & Overlap) --- */
+
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.auth-form {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    box-shadow: var(--color-shadow);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    z-index: 10; /* Ensures it sits above the background */
+    margin-top: 100px; /* Space for the initial large logo/header */
+}
+
+/* Fade-in effect for Auth Pages */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Overlay (Logo, Name, Toggle) - Overlapping Design */
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: linear-gradient(to bottom, var(--color-background) 0%, rgba(0,0,0,0) 100%);
+    z-index: 20; /* Highest z-index */
+    transition: all 0.3s ease;
+}
+
+.logo-text {
+    font-size: 2.5em;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+/* Effect: Logo shifts up/shrinks on scroll (Managed by JS, see public/js/ui.js) */
+.scrolled .header-overlay {
+    background-color: var(--color-surface); /* Solid background when scrolled */
+    padding: 10px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.scrolled .logo-text {
+    font-size: 1.5em;
+}
+
+/* --- 4. FORM ELEMENTS & OVERLAP EFFECT --- */
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+/* Overlap/Elevate effect on input focus */
+.input-group input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+    /* Transform gives the "overlap" or elevation feel */
+    transform: translateY(-2px);
+}
+
+/* Password Visibility Toggle */
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 38px;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+}
+
+/* Buttons */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.primary-btn {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+}
+
+.primary-btn:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--color-text);
+    transition: color 0.3s;
+}
+
+.theme-toggle-button:hover {
+    color: var(--color-primary);
+}
+
+/* Messages */
+.error-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: rgba(220, 53, 69, 0.1); /* light red */
+    color: var(--color-error);
+    border: 1px solid var(--color-error);
+    border-radius: 5px;
+}
+
+.success-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: rgba(40, 167, 69, 0.1); /* light green */
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+    border-radius: 5px;
+}

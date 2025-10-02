@@ -1,0 +1,51 @@
+<div class="header">
+    <h1>{{title}}</h1>
+    <a href="/students" class="btn" style="width: auto; padding: 10px 20px;">← Back to Roster</a>
+</div>
+
+{{#if error}}
+    <div class="error-message">{{error}}</div>
+{{/if}}
+
+<form action="/students/save" method="POST" class="card" style="margin-top: 20px; padding: 30px; max-width: 600px;">
+    
+    {{#if isEdit}}
+        <input type="hidden" name="student_id" value="{{student.student_id}}">
+    {{/if}}
+
+    <div style="display: flex; gap: 20px;">
+        <div class="input-group" style="flex: 1;">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" value="{{student.first_name}}" required>
+        </div>
+        <div class="input-group" style="flex: 1;">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" value="{{student.last_name}}" required>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 20px;">
+        <div class="input-group" style="flex: 1;">
+            <label for="class_section">Class/Section</label>
+            <input type="text" id="class_section" name="class_section" value="{{student.class_section}}" required>
+        </div>
+        <div class="input-group" style="flex: 1;">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" value="{{student.phone}}">
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <label for="father_name">Father's Name</label>
+        <input type="text" id="father_name" name="father_name" value="{{student.father_name}}">
+    </div>
+
+    <div class="input-group">
+        <label for="address">Address</label>
+        <textarea id="address" name="address" rows="3">{{student.address}}</textarea>
+    </div>
+
+    <button type="submit" class="btn primary-btn" style="margin-top: 10px;">
+        {{#if isEdit}}Update Student{{else}}Add Student{{/if}}
+    </button>
+</form>

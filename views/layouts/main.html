@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4D Academy | {{title}}</title>
+    <link rel="stylesheet" href="/public/css/global.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        /* Base Layout Specific Styles (Minimal, rely on global.css) */
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: width 0.3s ease;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .main-content {
+            margin-left: 250px; /* Must match sidebar width */
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .nav-item {
+            display: block;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: var(--color-primary);
+        }
+        .logo-small {
+            font-size: 1.5em;
+            color: var(--color-primary);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .user-info {
+            padding-top: 20px;
+            border-top: 1px solid var(--color-border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body class="{{theme}}-mode">
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/dashboard" class="logo-small">4D Academy</a>
+            
+            <nav class="main-nav">
+                <a href="/dashboard" class="nav-item {{#ifEquals activePage 'dashboard'}}active{{/ifEquals}}">
+                    🏠 Dashboard
+                </a>
+                <a href="/students" class="nav-item {{#ifEquals activePage 'students'}}active{{/ifEquals}}">
+                    🧑‍🎓 Students
+                </a>
+                <a href="/finance" class="nav-item {{#ifEquals activePage 'finance'}}active{{/ifEquals}}">
+                    💰 Fees & Finance
+                </a>
+                </nav>
+
+            <div class="user-info">
+                <p>Logged in as: <strong>Admin</strong></p>
+                <a href="/logout" class="nav-item" style="color: var(--color-error);">
+                    🚪 Logout
+                </a>
+                <button id="theme-toggle" class="theme-toggle-button" style="margin-top: 10px; font-size: 1em;">
+                    🌙 Toggle Theme
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            {{{body}}} 
+        </main>
+    </div>
+
+    <script src="/public/js/ui.js"></script>
+    <script src="/public/js/security.js"></script>
+</body>
+</html>

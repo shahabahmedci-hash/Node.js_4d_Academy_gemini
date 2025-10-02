@@ -1,0 +1,79 @@
+<style>
+    /* Specific styles for the Students list */
+    .student-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .student-table th, .student-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--color-border);
+    }
+    .student-table th {
+        background-color: var(--color-background);
+        font-weight: 700;
+        color: var(--color-text);
+    }
+    .student-table tr:hover {
+        background-color: rgba(0, 123, 255, 0.05); /* Slight hover effect */
+    }
+    .action-link {
+        margin-right: 15px;
+        color: var(--color-primary);
+    }
+    .delete-button {
+        color: var(--color-error);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: inherit;
+    }
+</style>
+
+<div class="header">
+    <h1>Student Roster ({{students.length}} Students)</h1>
+    <a href="/students/form" class="btn primary-btn" style="width: auto; padding: 10px 20px;">+ Add New Student</a>
+</div>
+
+{{#if message}}
+    <div class="success-message">{{message}}</div>
+{{/if}}
+{{#if error}}
+    <div class="error-message">{{error}}</div>
+{{/if}}
+
+{{#if students.length}}
+    <table class="student-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Class/Section</th>
+                <th>Date Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each students}}
+            <tr>
+                <td>{{student_id}}</td>
+                <td>{{last_name}}, {{first_name}}</td>
+                <td>{{phone}}</td>
+                <td>{{class_section}}</td>
+                <td>{{date_joined}}</td>
+                <td>
+                    <a href="/students/form/{{student_id}}" class="action-link">Edit</a>
+                    <form action="/students/delete/{{student_id}}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete {{first_name}} {{last_name}}? This action is irreversible.');">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p style="margin-top: 20px; color: var(--color-text-secondary);">No students found in the roster. Click "Add New Student" to begin.</p>
+{{/if}}

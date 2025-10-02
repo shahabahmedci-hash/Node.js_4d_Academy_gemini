@@ -1,0 +1,110 @@
+<style>
+    .finance-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* Fees take more width than Expenses */
+        gap: 30px;
+        margin-top: 20px;
+    }
+    .finance-card {
+        padding: 20px;
+        background-color: var(--color-surface);
+        border-radius: 8px;
+        box-shadow: var(--color-shadow);
+    }
+    .status-unpaid { color: var(--color-error); font-weight: bold; }
+    .status-paid { color: var(--color-success); font-weight: bold; }
+    .table-responsive { overflow-x: auto; }
+    .action-dropdown {
+        padding: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+<div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Financial Overview</h1>
+    <div style="display: flex; gap: 10px;">
+        <a href="/finance/fees/add" class="btn primary-btn" style="width: auto;">+ Create Fee Record</a>
+        <a href="/finance/transactions/add" class="btn" style="width: auto;">+ Record Transaction</a>
+    </div>
+</div>
+
+{{#if message}}
+    <div class="success-message">{{message}}</div>
+{{/if}}
+{{#if error}}
+    <div class="error-message">{{error}}</div>
+{{/if}}
+
+<div class="finance-grid">
+    <div class="finance-card">
+        <h2>Fee Status ({{fees.length}})</h2>
+        <div class="table-responsive">
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each fees}}
+                    <tr>
+                        <td>{{students.first_name}} {{students.last_name}}</td>
+                        <td>₹ {{amount}}</td>
+                        <td>{{due_date}}</td>
+                        <td>
+                            <span class="status-{{status}}">{{status}}</span>
+                        </td>
+                        <td>
+                            {{#ifEquals status 'Unpaid'}}
+                                <form action="/finance/fees/pay/{{fee_id}}" method="POST" style="display: inline;" onsubmit="return confirm('Confirm payment received?');">
+                                    <input type="hidden" name="paid_on" value="{{currentDate}}">
+                                    <button type="submit" class="btn primary-btn action-dropdown">Mark Paid</button>
+                                </form>
+                            {{else}}
+                                Paid on: {{paid_date}}
+                            {{/ifEquals}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="finance-card">
+        <h2>Recent Transactions</h2>
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each expensesIncome}}
+                <tr>
+                    <td>{{transaction_date}}</td>
+                    <td><span style="font-weight: bold; color: {{#ifEquals type 'Income'}}var(--color-success){{else}}var(--color-error){{/ifEquals}};">{{type}}</span></td>
+                    <td>₹ {{amount}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Helper function to get today's date for payment form default
+    document.addEventListener('DOMContentLoaded', () => {
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('input[name="paid_on"]').forEach(input => {
+            input.value = today;
+        });
+    });
+</script>

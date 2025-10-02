@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to 4D Academy</title>
+    <link rel="stylesheet" href="/public/css/global.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            background-color: var(--color-background);
+            color: var(--color-text);
+        }
+        .container {
+            background-color: var(--color-surface);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--color-shadow);
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        h1 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            color: var(--color-text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to 4D Academy CMS</h1>
+        <p>Your secure management portal for students, fees, and finance.</p>
+        <a href="/login" class="btn primary-btn" style="padding: 12px 30px; width: auto; text-decoration: none;">
+            Proceed to Login
+        </a>
+    </div>
+
+    <button id="theme-toggle" class="theme-toggle-button" style="position: absolute; top: 20px; right: 20px;"></button>
+    <script src="/public/js/ui.js"></script>
+    <script src="/public/js/security.js"></script>
+</body>
+</html>
